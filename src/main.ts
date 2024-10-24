@@ -15,6 +15,9 @@ import { provideRouterStore, routerReducer } from '@ngrx/router-store'
 import { authInterceptor } from './app/shared/services/authInterceptor'
 import { feedFeatureKey, feedReducer } from './app/shared/components/feed/store/reducers'
 import { popularTagsFeatureKey, popularTagsReducer } from './app/shared/components/popularTags/store/reducers'
+import * as addToFavoritesEffects from './app/shared/components/addToFavorites/store/effects'
+import { AddToFavoritesService } from './app/shared/components/addToFavorites/services/addToFavorites.service'
+
 bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(withInterceptors([authInterceptor])),
@@ -26,7 +29,7 @@ bootstrapApplication(AppComponent, {
     provideState(authFeatureKey,authReducer),
     provideState(feedFeatureKey, feedReducer),
     provideState(popularTagsFeatureKey, popularTagsReducer),
-    provideEffects(authEffects,feedEffects,popularEffects),
+    provideEffects(authEffects,feedEffects,popularEffects,addToFavoritesEffects),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),
@@ -34,5 +37,6 @@ bootstrapApplication(AppComponent, {
       trace: false,
       traceLimit: 75,
     }),
+    AddToFavoritesService,
   ],
 })
